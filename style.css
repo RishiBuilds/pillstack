@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Roboto", sans-serif;
     color: #222;
@@ -66,6 +70,14 @@ body {
 }
 
 .navbar a:hover::after {
+    width: 100%;
+}
+
+.navbar a.active {
+    color: #1fa37a;
+}
+
+.navbar a.active::after {
     width: 100%;
 }
 
