@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PillStack – Online Pharmacy</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css" />
-
-    <!-- font awesome cdn link -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
 </head>
 
 <body>
@@ -21,10 +23,10 @@
     <header class="header">
 
         <!-- Logo -->
-        <a href="#" class="logo">
-            <img src="assets/images/logo.png" alt="PillStack Logo">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.png" alt="PillStack Logo" />
         </a>
-         
+
         <!-- Navigation -->
         <nav class="navbar">
             <a href="index.html">Home</a>
@@ -36,17 +38,37 @@
             <a href="login.html">Login</a>
         </nav>
 
-        <!-- Mobile menu button -->
-        <button id="menu-btn" aria-label="Toggle menu">
-            <i class="fas fa-bars"></i>
-        </button>
-
-        <!-- CTA Button -->
-        <a href="appointment.html" class="btn">Make Appointment</a>
-
+        <!-- Helpline Button -->
+        <div class="menubtn">
+            <button type="button">Helpline</button>
+        </div>
 
     </header>
-    <!-- header -->
-</body>
+    <!-- Header End -->
 
+    <!-- Main Content -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+
+            <div class="hero-left">
+                <h2>Your Health, Our Priority</h2>
+                <h1>Experience the convenience of online pharmacy with PillStack</h1>
+                <p>
+                    Get your medications delivered to your doorstep with ease and reliability.
+                </p>
+                <button class="btn">Make an Appointment</button>
+            </div>
+
+            <div class="hero-right">
+                <img src="assets/images/hero.png" alt="Online Pharmacy" />
+            </div>
+
+        </section>
+        <!-- Hero End -->
+
+    </main>
+
+</body>
 </html>
