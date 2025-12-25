@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login page</title>
+    <title>Login</title>
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,26 +59,29 @@
             <form action="#">
                 <h1>CREATE ACCOUNT</h1>
                 <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social" aria-label="Sign up with Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                    <a href="#" class="social" aria-label="Sign up with Google"><i class="fab fa-google" aria-hidden="true"></i></a>
+                    <a href="#" class="social" aria-label="Sign up with LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                 </div>
                 <span>or use your email for registration</span>
 
                 <!-- Input Fields -->
                 <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username" required />
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <label for="signup-username" class="sr-only">Username</label>
+                    <input type="text" id="signup-username" name="username" placeholder="Username" required />
                 </div>
 
                 <div class="input-field">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email" required />
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <label for="signup-email" class="sr-only">Email</label>
+                    <input type="email" id="signup-email" name="email" placeholder="Email" required />
                 </div>
 
                 <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" required />
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <label for="signup-password" class="sr-only">Password</label>
+                    <input type="password" id="signup-password" name="password" placeholder="Password" required />
                 </div>
 
                 <button type="submit">SIGN UP</button>
@@ -90,21 +93,23 @@
             <form action="#">
                 <h1>SIGN IN</h1>
                 <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social" aria-label="Sign in with Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                    <a href="#" class="social" aria-label="Sign in with Google"><i class="fab fa-google" aria-hidden="true"></i></a>
+                    <a href="#" class="social" aria-label="Sign in with LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                 </div>
                 <span>or use your account</span>
 
                 <!-- Input Fields -->
                 <div class="input-field">
-                    <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username" required />
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <label for="signin-username" class="sr-only">Username</label>
+                    <input type="text" id="signin-username" name="username" placeholder="Username" required />
                 </div>
 
                 <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" required />
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <label for="signin-password" class="sr-only">Password</label>
+                    <input type="password" id="signin-password" name="password" placeholder="Password" required />
                 </div>
                 
                 <a href="#">Forgot your password?</a>

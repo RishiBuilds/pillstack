@@ -24,6 +24,18 @@ html {
     overflow-x: hidden;
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
 body {
     background: linear-gradient(135deg, #f0f7f4 0%, #e8f5f0 100%);
     padding-top: 85px;
@@ -153,6 +165,27 @@ body {
     left: 0;
     width: 50%;
     z-index: 2;
+    background-image: url('assets/images/OLhealthcare.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.sign-in-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.88) 100%);
+    z-index: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.sign-in-container form {
+    position: relative;
+    z-index: 1;
 }
 
 .container.right-panel-active .sign-in-container {
@@ -163,6 +196,27 @@ body {
     left: 50%;
     width: 50%;
     opacity: 0;
+    z-index: 1;
+    background-image: url('assets/images/pharmabldg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.sign-up-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.88) 100%);
+    z-index: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.sign-up-container form {
+    position: relative;
     z-index: 1;
 }
 
@@ -185,7 +239,7 @@ body {
 }
 
 form {
-    background-color: #ffffff;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -430,13 +484,12 @@ button.ghost:hover {
 }
 
 .overlay-panel h1 {
-    color: #fff !important;
+    color: #fff;
     margin-bottom: 20px;
     text-transform: uppercase;
     font-size: 35px;
     letter-spacing: 2px;
-    -webkit-text-fill-color: #fff !important;
-    background: none !important;
+    font-family: "Bebas Neue", sans-serif;
 }
 
 .overlay-panel p {
