@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather:ital,wght@0,300;0,400;0,700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="contact.css">
+    <script src="theme.js" defer></script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <a href="index.html" class="logo">
+        <img src="assets/images/logo.png" alt="PillStack Logo">
+        <span>PillStack<span class="plus">+</span></span>
+    </a>
+
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="medicine.html">Medicines</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+    </nav>
+
+    <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="auth-buttons" id="authSection">
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-sun"></i>
+        </button>
+        <a href="login.html" class="btn-outline">Login</a>
+        <button class="btn-primary">Helpline</button>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="medicine.html">Medicines</a>
+    <a href="doctor.html">Doctors</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="active">Contact</a>
+</nav>
+
+<!-- Main Content -->
+<main class="contact-page">
+    <!-- Hero Section -->
+    <section class="contact-hero">
+        <h1>Get in Touch</h1>
+        <p>Have questions? We're here to help you with your healthcare needs.</p>
+    </section>
+
+    <div class="contact-container">
+        <!-- Contact Info Cards -->
+        <div class="contact-grid">
+            <div class="contact-info-card">
+                <div class="icon-box">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <h3>Call Us</h3>
+                <p>Emergency: +91-9326433946</p>
+                <p>Support: +91-73646038383</p>
+            </div>
+
+            <div class="contact-info-card">
+                <div class="icon-box">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email Us</h3>
+                <p>support@pillstack.in</p>
+                <p>info@pillstack.in</p>
+            </div>
+
+            <div class="contact-info-card">
+                <div class="icon-box">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Visit Us</h3>
+                <p>Kurla bandra complex (BKC)</p>
+                <p>Mumbai, Maharashtra, India</p>
+            </div>
+        </div>
+
+        <!-- Form & Map Section -->
+        <div class="contact-content">
+            <div class="contact-form-wrapper">
+                <h2>Send us a Message</h2>
+                <form id="contactForm" class="modern-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="Elon Musk" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="elonmusk@example.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" placeholder="How can we help?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" placeholder="Your message here..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-100">Send Message</button>
+                </form>
+            </div>
+
+            <div class="map-wrapper">
+                <h2>Our Location</h2>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241316.70221286555!2d72.71378436699031!3d19.082481905624384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1738413274012!5m2!1sen!2sin" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="PillStack Location Map">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>PillStack<span class="plus">+</span></h4>
+            <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html">Services</a>
+            <a href="prescription.html">Upload Prescription</a>
+            <a href="orders.html">My Orders</a>
+        </div>
+        <div class="footer-section">
+            <h4>Customer Care</h4>
+            <a href="contact.html">Contact Us</a>
+            <a href="about.html">About Us</a>
+            <a href="#">FAQs</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
+            <p><i class="fas fa-phone"></i> +91-9326433946</p>
+            <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
+            <p><i class="fas fa-clock"></i> 24/7 Support</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 PillStack+. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-init.js"></script>
+<script>
+// Auth check
+async function checkAuth() {
+    if (!window.supabaseClient) return setTimeout(checkAuth, 300);
+    
+    try {
+        const { data: { session } } = await window.supabaseClient.auth.getSession();
+        if (session?.user) {
+            document.getElementById('authSection').innerHTML = `
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <span class="user-email">${session.user.email}</span>
+                <button class="btn-outline" onclick="logout()">Logout</button>
+                <button class="btn-primary">Helpline</button>
+            `;
+        }
+    } catch (err) {
+        console.log('No session');
+    }
+}
+
+async function logout() {
+    await window.supabaseClient.auth.signOut();
+    location.reload();
+}
+
+// Contact form handler
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Thank you for your message! We will get back to you soon.');
+    e.target.reset();
+});
+
+// Mobile menu
+const toggle = document.getElementById('menuToggle');
+const menu = document.getElementById('mobileMenu');
+
+toggle?.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    const icon = toggle.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+});
+
+document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        menu.classList.remove('active');
+        toggle.querySelector('i').className = 'fas fa-bars';
+    }
+});
+
+menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        menu.classList.remove('active');
+        toggle.querySelector('i').className = 'fas fa-bars';
+    });
+});
+
+checkAuth();
+</script>
+
+</body>
+</html>
