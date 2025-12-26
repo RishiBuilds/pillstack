@@ -193,19 +193,37 @@ async function addToCart(id, name, price, requiresPrescription = false) {
     }
     
     updateCartUI();
-    el.cartSidebar?.classList.add('active');
+    
+    // Show feedback
+    if (window.showToast) {
+        showToast(`${name} added to cart`);
+    } else {
+        el.cartSidebar?.classList.add('active');
+    }
 }
 
 // Check Prescription Access
 async function checkPrescriptionAccess() {
     if (!window.supabaseClient) {
-        alert('Please wait for the system to load.');
+        showToast('Please wait for the system to load.', 'error');
         return false;
     }
 
     const { data: { session } } = await window.supabaseClient.auth.getSession();
     
     if (!session?.user) {
+        if (window.showConfirmModal) {
+            return new Promise(resolve => {
+                showConfirmModal(
+                    'Login Required',
+                    'You need to login to purchase prescription medicines.',
+                    () => {
+                        window.location.href = 'login.html';
+                        resolve(false);
+                    }
+                );
+            });
+        }
         alert('Please login to purchase prescription medicines.');
         window.location.href = 'login.html';
         return false;
@@ -218,6 +236,18 @@ async function checkPrescriptionAccess() {
         .eq('status', 'approved');
 
     if (!prescriptions?.length) {
+        if (window.showConfirmModal) {
+            return new Promise(resolve => {
+                showConfirmModal(
+                    'Prescription Required',
+                    'This item requires a valid prescription. Would you like to upload one now?',
+                    () => {
+                        window.location.href = 'prescription.html';
+                        resolve(false);
+                    }
+                );
+            });
+        }
         if (confirm('This requires a prescription. Upload one now?')) {
             window.location.href = 'prescription.html';
         }
@@ -239,19 +269,20 @@ function updateCartUI() {
         <div class="cart-item">
             <div class="item-info">
                 <h4>${item.name}</h4>
-                <p>₹${item.price.toFixed(2)} × ${item.quantity}</p>
+                <p>${window.formatCurrency ? formatCurrency(item.price) : '₹' + item.price.toFixed(2)} × ${item.quantity}</p>
             </div>
             <div class="item-actions">
-                <button onclick="updateQuantity('${item.id}', -1)" aria-label="Decrease">-</button>
+                <button onclick="updateQuantity('${item.id}', -1)" aria-label="Decrease" class="btn-qty">-</button>
                 <span>${item.quantity}</span>
-                <button onclick="updateQuantity('${item.id}', 1)" aria-label="Increase">+</button>
+                <button onclick="updateQuantity('${item.id}', 1)" aria-label="Increase" class="btn-qty">+</button>
+                <button onclick="removeFromCart('${item.id}')" aria-label="Remove" class="btn-remove"><i class="fas fa-trash"></i></button>
             </div>
         </div>
     `).join('') : '<div class="no-results">Cart is empty</div>';
 
     // Update total
     const total = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    el.cartTotal.textContent = `₹${total.toFixed(2)}`;
+    el.cartTotal.textContent = window.formatCurrency ? formatCurrency(total) : `₹${total.toFixed(2)}`;
     
     // Save to localStorage
     saveCart();
@@ -271,6 +302,11 @@ function updateQuantity(id, delta) {
     updateCartUI();
 }
 
+function removeFromCart(id) {
+    state.cart = state.cart.filter(i => i.id !== id);
+    updateCartUI();
+}
+
 // Save Cart
 function saveCart() {
     localStorage.setItem('pillstack_cart', JSON.stringify(state.cart));
@@ -279,20 +315,28 @@ function saveCart() {
 // Handle Checkout
 async function handleCheckout() {
     if (!window.supabaseClient) {
-        alert('Please wait for the system to load.');
+        showToast('Please wait for the system to load.', 'error');
         return;
     }
     
     const { data: { session } } = await window.supabaseClient.auth.getSession();
     
     if (!session?.user) {
-        alert('Please login to checkout');
-        window.location.href = 'login.html';
+        if (window.showConfirmModal) {
+            showConfirmModal(
+                'Login Required', 
+                'Please login to complete your purchase.',
+                () => window.location.href = 'login.html'
+            );
+        } else {
+            alert('Please login to checkout');
+            window.location.href = 'login.html';
+        }
         return;
     }
     
     if (!state.cart.length) {
-        alert('Your cart is empty');
+        showToast('Your cart is empty', 'error');
         return;
     }
 

@@ -10,40 +10,239 @@
     <link rel="stylesheet" href="style.css">
     <script src="theme.js" defer></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color, #f8f9fa);
+            color: var(--text-color, #1f2937);
+        }
+
         .checkout-container {
-            padding: 8rem 5% 4rem;
-            max-width: 1000px;
+            padding: 2rem 5% 4rem;
+            max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1.5fr 1fr;
-            gap: 3rem;
+            gap: 2rem;
         }
+
         .checkout-form, .order-summary {
-            background: white;
-            padding: 2rem;
+            background: var(--card-bg, white);
+            padding: 2.5rem;
             border-radius: 16px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
         }
+
         .checkout-form h2, .order-summary h2 {
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-color, #1f2937);
         }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-color, #374151);
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-color, #e5e7eb);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--input-bg, white);
+            color: var(--text-color, #1f2937);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
         .summary-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #f1f5f9;
+            align-items: start;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-color, #f1f5f9);
         }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--text-color, #1f2937);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-quantity {
+            font-size: 0.9rem;
+            color: var(--text-light, #6b7280);
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: var(--text-color, #1f2937);
+        }
+
+        .summary-divider {
+            height: 2px;
+            background: var(--border-color, #e5e7eb);
+            margin: 1.5rem 0;
+        }
+
         .total-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color, #e5e7eb);
+            color: var(--text-color, #1f2937);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-top: 1rem;
         }
-        @media (max-width: 768px) {
-            .checkout-container { grid-template-columns: 1fr; }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            color: #9ca3af;
+            margin-bottom: 1rem;
+        }
+
+        .empty-cart h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color, #1f2937);
+        }
+
+        .empty-cart p {
+            color: var(--text-light, #6b7280);
+            margin-bottom: 1.5rem;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        /* Dark mode support */
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --text-color: #f9fafb;
+            --text-light: #9ca3af;
+            --border-color: #374151;
+            --input-bg: #111827;
+        }
+
+        @media (max-width: 968px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                padding: 6rem 4% 3rem;
+                gap: 1.5rem;
+            }
+
+            .checkout-form, .order-summary {
+                padding: 2rem;
+            }
+
+            .checkout-form h2, .order-summary h2 {
+                font-size: 1.5rem;
+            }
+
+            .total-row {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .checkout-container {
+                padding: 5rem 3% 2rem;
+            }
+
+            .checkout-form, .order-summary {
+                padding: 1.5rem;
+            }
+
+            .checkout-form h2, .order-summary h2 {
+                font-size: 1.35rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .input-group input,
+            .input-group textarea {
+                padding: 0.75rem 0.875rem;
+                font-size: 0.95rem;
+            }
+
+            .btn-primary {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
@@ -71,24 +270,29 @@
             <h2>Shipping Details</h2>
             <form id="checkoutForm">
                 <div class="input-group">
-                    <label>Full Name</label>
-                    <input type="text" id="fullName" required>
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
                 </div>
                 <div class="input-group">
-                    <label>Delivery Address</label>
-                    <textarea id="address" required style="width:100%; height:100px; padding:10px; border-radius:8px; border:1px solid #e2e8f0;"></textarea>
+                    <label>Delivery Address <span class="required">*</span></label>
+                    <textarea id="address" placeholder="Enter your complete delivery address" required></textarea>
                 </div>
                 <div class="input-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="phone" required>
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" pattern="[0-9\+\s\-]+" required>
                 </div>
-                <button type="submit" class="btn-primary w-100" style="margin-top:1rem">Place Order</button>
+                <div class="input-group">
+                    <label>Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" placeholder="your.email@example.com" required>
+                </div>
+                <button type="submit" class="btn-primary">Place Order</button>
             </form>
         </div>
 
         <div class="order-summary">
             <h2>Order Summary</h2>
             <div id="summaryItems"></div>
+            <div class="summary-divider"></div>
             <div class="total-row">
                 <span>Total</span>
                 <span id="summaryTotal">₹0.00</span>
@@ -102,27 +306,40 @@
         const summaryItems = document.getElementById('summaryItems');
         const summaryTotal = document.getElementById('summaryTotal');
 
+        // Check if cart is empty
         if (cart.length === 0) {
             alert('Your cart is empty');
             window.location.href = 'medicine.html';
         }
 
+        // Display order summary with Indian Rupee
         function displaySummary() {
             summaryItems.innerHTML = cart.map(item => `
                 <div class="summary-item">
-                    <span>${item.name} x ${item.quantity}</span>
-                    <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-quantity">Quantity: ${item.quantity}</div>
+                    </div>
+                    <div class="item-price">₹${(item.price * item.quantity).toFixed(2)}</div>
                 </div>
             `).join('');
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            summaryTotal.innerText = `$${total.toFixed(2)}`;
+            summaryTotal.innerText = `₹${total.toFixed(2)}`;
         }
 
+        // Handle form submission
         document.getElementById('checkoutForm').onsubmit = async (e) => {
             e.preventDefault();
+            
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+
             if (!window.supabaseClient) {
                 alert('Authentication system is loading. Please wait.');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Place Order';
                 return;
             }
 
@@ -133,47 +350,59 @@
                 return;
             }
 
+            const fullName = document.getElementById('fullName').value;
             const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-            // Create Order
-            const { data: order, error: orderError } = await window.supabaseClient
-                .from('orders')
-                .insert({
-                    user_id: user.id,
-                    total_amount: total,
-                    delivery_address: address,
-                    status: 'paid'
-                })
-                .select()
-                .single();
+            try {
+                // Create Order
+                const { data: order, error: orderError } = await window.supabaseClient
+                    .from('orders')
+                    .insert({
+                        user_id: user.id,
+                        total_amount: total,
+                        delivery_address: address,
+                        status: 'pending'
+                    })
+                    .select()
+                    .single();
 
-            if (orderError) {
-                alert('Error creating order: ' + orderError.message);
-                return;
-            }
+                if (orderError) {
+                    console.error('Order creation error:', orderError);
+                    throw new Error('Error creating order: ' + orderError.message);
+                }
 
-            // Create Order Items
-            const itemsToInsert = cart.map(item => ({
-                order_id: order.id,
-                medicine_id: item.id,
-                quantity: item.quantity,
-                unit_price: item.price
-            }));
+                // Create Order Items
+                const itemsToInsert = cart.map(item => ({
+                    order_id: order.id,
+                    medicine_id: item.id,
+                    quantity: item.quantity,
+                    unit_price: item.price
+                }));
 
-            const { error: itemsError } = await window.supabaseClient
-                .from('order_items')
-                .insert(itemsToInsert);
+                const { error: itemsError } = await window.supabaseClient
+                    .from('order_items')
+                    .insert(itemsToInsert);
 
-            if (itemsError) {
-                alert('Error saving order items: ' + itemsError.message);
-            } else {
+                if (itemsError) {
+                    throw new Error('Error saving order items: ' + itemsError.message);
+                }
+
+                // Success - clear cart and redirect
                 localStorage.removeItem('pillstack_cart');
-                alert('Order placed successfully! Order ID: ' + order.id);
-                window.location.href = 'index.html';
+                alert(`Order placed successfully!\n\nOrder ID: ${order.id}\nTotal Amount: ₹${total.toFixed(2)}\n\nThank you for your order!`);
+                window.location.href = 'orders.html';
+
+            } catch (error) {
+                alert(error.message);
+                submitButton.disabled = false;
+                submitButton.textContent = 'Place Order';
             }
         };
 
+        // Display the summary on page load
         displaySummary();
     </script>
 
@@ -217,47 +446,46 @@
         }
     </script>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-section">
-            <h4>PillStack<span class="plus">+</span></h4>
-            <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
-            <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>PillStack<span class="plus">+</span></h4>
+                <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="medicine.html">Medicines</a>
+                <a href="doctor.html">Doctors</a>
+                <a href="services.html">Services</a>
+                <a href="prescription.html">Upload Prescription</a>
+                <a href="orders.html">My Orders</a>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Care</h4>
+                <a href="contact.html">Contact Us</a>
+                <a href="about.html">About Us</a>
+                <a href="#">FAQs</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
+                <p><i class="fas fa-phone"></i> +91-9326433946</p>
+                <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
+                <p><i class="fas fa-clock"></i> 24/7 Support</p>
             </div>
         </div>
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <a href="medicine.html">Medicines</a>
-            <a href="doctor.html">Doctors</a>
-            <a href="services.html">Services</a>
-            <a href="prescription.html">Upload Prescription</a>
-            <a href="orders.html">My Orders</a>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PillStack+. All rights reserved.</p>
         </div>
-        <div class="footer-section">
-            <h4>Customer Care</h4>
-            <a href="contact.html">Contact Us</a>
-            <a href="about.html">About Us</a>
-            <a href="#">FAQs</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-        </div>
-        <div class="footer-section">
-            <h4>Contact Us</h4>
-            <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
-            <p><i class="fas fa-phone"></i> +91-9326433946</p>
-            <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
-            <p><i class="fas fa-clock"></i> 24/7 Support</p>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; 2025 PillStack+. All rights reserved.</p>
-    </div>
-</footer>
-
+    </footer>
 </body>
 </html>

@@ -478,6 +478,18 @@ body {
     transform: scale(1.1);
 }
 
+.item-actions .btn-remove {
+    margin-left: auto;
+    border-color: var(--border);
+    color: var(--text-light);
+}
+
+.item-actions .btn-remove:hover {
+    border-color: var(--secondary);
+    background: var(--secondary);
+    color: white;
+}
+
 .cart-footer {
     padding: 1.5rem;
     border-top: 2px solid var(--border);

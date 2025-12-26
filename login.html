@@ -212,49 +212,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- MOBILE MENU -->
 <script>
-const menuBtn = document.getElementById('mobileMenuToggle');
-const mobileMenu = document.getElementById('mobileMenu');
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
 
-menuBtn?.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-    menuBtn.querySelector('i').classList.toggle('fa-times');
-});
+    menuBtn?.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        menuBtn.querySelector('i').classList.toggle('fa-times');
+    });
 
-// Mobile form toggle
-const mobileSignInBtn = document.getElementById('mobileSignInBtn');
-const mobileSignUpBtn = document.getElementById('mobileSignUpBtn');
-const signInContainer = document.querySelector('.sign-in-container');
-const signUpContainer = document.querySelector('.sign-up-container');
-const mobileToggle = document.querySelector('.mobile-form-toggle');
+    // Mobile form toggle
+    const mobileSignInBtn = document.getElementById('mobileSignInBtn');
+    const mobileSignUpBtn = document.getElementById('mobileSignUpBtn');
+    const signInContainer = document.querySelector('.sign-in-container');
+    const signUpContainer = document.querySelector('.sign-up-container');
+    const mobileToggle = document.querySelector('.mobile-form-toggle');
 
-function updateMobileView() {
-    if (window.innerWidth <= 968) {
-        mobileToggle.style.display = 'flex';
-        signInContainer.style.display = 'block';
-        signUpContainer.style.display = 'none';
-    } else {
-        mobileToggle.style.display = 'none';
-        signInContainer.style.display = '';
-        signUpContainer.style.display = '';
+    function updateMobileView() {
+        if (window.innerWidth <= 968) {
+            if (mobileToggle) mobileToggle.style.display = 'flex';
+            if (signInContainer) signInContainer.style.display = 'block';
+            if (signUpContainer) signUpContainer.style.display = 'none';
+        } else {
+            if (mobileToggle) mobileToggle.style.display = 'none';
+            if (signInContainer) signInContainer.style.display = '';
+            if (signUpContainer) signUpContainer.style.display = '';
+        }
     }
-}
 
-mobileSignInBtn?.addEventListener('click', () => {
-    signInContainer.style.display = 'block';
-    signUpContainer.style.display = 'none';
-    mobileSignInBtn.classList.add('active');
-    mobileSignUpBtn.classList.remove('active');
+    if (mobileSignInBtn) {
+        mobileSignInBtn.addEventListener('click', () => {
+            if (signInContainer) signInContainer.style.display = 'block';
+            if (signUpContainer) signUpContainer.style.display = 'none';
+            mobileSignInBtn.classList.add('active');
+            if (mobileSignUpBtn) mobileSignUpBtn.classList.remove('active');
+        });
+    }
+
+    if (mobileSignUpBtn) {
+        mobileSignUpBtn.addEventListener('click', () => {
+            if (signInContainer) signInContainer.style.display = 'none';
+            if (signUpContainer) signUpContainer.style.display = 'block';
+            mobileSignUpBtn.classList.add('active');
+            if (mobileSignInBtn) mobileSignInBtn.classList.remove('active');
+        });
+    }
+
+    // Initialize and listen for resize
+    updateMobileView();
+    window.addEventListener('resize', updateMobileView);
 });
-
-mobileSignUpBtn?.addEventListener('click', () => {
-    signInContainer.style.display = 'none';
-    signUpContainer.style.display = 'block';
-    mobileSignUpBtn.classList.add('active');
-    mobileSignInBtn.classList.remove('active');
-});
-
-updateMobileView();
-window.addEventListener('resize', updateMobileView);
 </script>
 
 </body>
