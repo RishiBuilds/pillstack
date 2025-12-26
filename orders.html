@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="orders.css">
+    <script src="theme.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.png" alt="PillStack Logo">
+            <span>PillStack<span class="plus">+</span></span>
+        </a>
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html">Services</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="auth-buttons" id="authSection">
+            <button class="theme-toggle" onclick="toggleTheme()">
+               <i class="fas fa-sun"></i>
+            </button>
+            <a href="login.html" class="btn-outline">Login</a>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="medicine.html">Medicines</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main class="orders-container">
+        <section class="orders-header">
+            <h1>My Orders</h1>
+            <p>Track and manage your medicine orders</p>
+        </section>
+
+        <section class="orders-grid" id="ordersGrid">
+            <div class="loading">Loading your orders...</div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>PillStack<span class="plus">+</span></h4>
+                <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="medicine.html">Medicines</a>
+                <a href="doctor.html">Doctors</a>
+                <a href="services.html">Services</a>
+                <a href="prescription.html">Upload Prescription</a>
+                <a href="orders.html">My Orders</a>
+            </div>
+            <div class="footer-section">
+                <h4>Customer Care</h4>
+                <a href="contact.html">Contact Us</a>
+                <a href="about.html">About Us</a>
+                <a href="#">FAQs</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
+                <p><i class="fas fa-phone"></i> +91-9326433946</p>
+                <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
+                <p><i class="fas fa-clock"></i> 24/7 Support</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 PillStack+. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="supabase-init.js"></script>
+    <script>
+        async function checkAuth() {
+            if (!window.supabaseClient) {
+                setTimeout(checkAuth, 300);
+                return;
+            }
+
+            const { data: { user } } = await window.supabaseClient.auth.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('authSection').innerHTML = `
+                <button class="theme-toggle" onclick="toggleTheme()">
+                   <i class="fas fa-sun"></i>
+                </button>
+                <span class="user-email">${user.email}</span>
+                <button class="btn-outline" onclick="window.supabaseClient.auth.signOut().then(() => location.href='index.html')">
+                    Logout
+                </button>
+            `;
+
+            loadOrders(user.id);
+        }
+
+        async function loadOrders(userId) {
+            const ordersGrid = document.getElementById('ordersGrid');
+            
+            const { data: orders, error } = await window.supabaseClient
+                .from('orders')
+                .select(`
+                    *,
+                    order_items (
+                        *,
+                        medicines (name, price)
+                    )
+                `)
+                .eq('user_id', userId)
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                ordersGrid.innerHTML = '<div class="error">Failed to load orders. Please try again.</div>';
+                console.error('Error loading orders:', error);
+                return;
+            }
+
+            if (orders.length === 0) {
+                ordersGrid.innerHTML = `
+                    <div class="no-orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>No orders yet</h3>
+                        <p>Start shopping for medicines to see your orders here</p>
+                        <a href="medicine.html" class="btn-primary">Browse Medicines</a>
+                    </div>
+                `;
+                return;
+            }
+
+            ordersGrid.innerHTML = orders.map(order => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <h3>Order #${order.id.substring(0, 8).toUpperCase()}</h3>
+                            <p class="order-date">${new Date(order.created_at).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                            })}</p>
+                        </div>
+                        <span class="status-badge status-${order.status}">${order.status.toUpperCase()}</span>
+                    </div>
+                    <div class="order-items">
+                        ${order.order_items.map(item => `
+                            <div class="order-item">
+                                <span class="item-name">${item.medicines?.name || 'Unknown Item'}</span>
+                                <span class="item-qty">Qty: ${item.quantity}</span>
+                                <span class="item-price">₹${(item.unit_price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${order.delivery_address}</span>
+                        </div>
+                        <div class="order-total">
+                            <strong>Total:</strong> ₹${order.total_amount.toFixed(2)}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        checkAuth();
+    </script>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Closez menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Closez menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
