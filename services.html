@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="services.css">
+
+    <!-- Theme Script -->
+    <script src="theme.js" defer></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <a href="index.html" class="logo">
+        <img src="assets/images/logo.png" alt="PillStack Logo">
+        <span>PillStack<span class="plus">+</span></span>
+    </a>
+
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html" class="active">Services</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+    <div class="auth-buttons" id="authSection">
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <i class="fas fa-sun"></i>
+        </button>
+
+        <a href="login.html" class="btn-outline">Login</a>
+        <button type="button" class="btn-primary">Helpline</button>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="medicine.html">Medicines</a>
+    <a href="doctor.html">Doctors</a>
+    <a href="services.html" class="active">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+</nav>
+
+<!-- ================= MAIN CONTENT ================= -->
+<main class="services-container">
+
+    <!-- Hero Section -->
+    <section class="services-hero">
+        <h2>OUR SERVICES</h2>
+        <h1>Comprehensive Healthcare Solutions</h1>
+        <p>We provide a complete range of pharmaceutical and medical services designed to ensure your health and well-being at every step.</p>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="trust-badges">
+        <div class="trust-badge">
+            <i class="fas fa-shield-alt"></i>
+            <h4>100% Authentic</h4>
+            <p>Verified Products</p>
+        </div>
+        <div class="trust-badge">
+            <i class="fas fa-truck-fast"></i>
+            <h4>Fast Delivery</h4>
+            <p>2-Hour Express</p>
+        </div>
+        <div class="trust-badge">
+            <i class="fas fa-lock"></i>
+            <h4>Secure Payment</h4>
+            <p>Safe Transactions</p>
+        </div>
+        <div class="trust-badge">
+            <i class="fas fa-headset"></i>
+            <h4>24/7 Support</h4>
+            <p>Always Available</p>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-grid">
+
+        <article class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-truck-medical"></i>
+            </div>
+            <h3>Express Delivery</h3>
+            <p>Get your medicines delivered within 2 hours in selected areas. We ensure safe, temperature-controlled transport with real-time tracking.</p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Same-day delivery</li>
+                <li><i class="fas fa-check"></i> Temperature controlled</li>
+                <li><i class="fas fa-check"></i> Real-time tracking</li>
+            </ul>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-video"></i>
+            </div>
+            <h3>24/7 Tele-Consultation</h3>
+            <p>Access our network of certified doctors anytime, anywhere. Book instant video consultations from the comfort of your home.</p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Certified doctors</li>
+                <li><i class="fas fa-check"></i> Instant booking</li>
+                <li><i class="fas fa-check"></i> Digital prescriptions</li>
+            </ul>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h3>Chronic Care Management</h3>
+            <p>Specialized management for long-term health conditions with regular medicine refills, health monitoring, and personalized care plans.</p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Regular monitoring</li>
+                <li><i class="fas fa-check"></i> Auto refills</li>
+                <li><i class="fas fa-check"></i> Care coordination</li>
+            </ul>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-flask"></i>
+            </div>
+            <h3>Diagnostic Lab Tests</h3>
+            <p>Book comprehensive lab tests from home. Professional sample collection with digital reports delivered directly to your inbox.</p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Home sample collection</li>
+                <li><i class="fas fa-check"></i> NABL certified labs</li>
+                <li><i class="fas fa-check"></i> Digital reports</li>
+            </ul>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-pills"></i>
+            </div>
+            <h3>Medication Reminders</h3>
+            <p>Never miss a dose with our smart medication reminder system. Get timely alerts and refill notifications directly on your phone.</p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Smart reminders</li>
+                <li><i class="fas fa-check"></i> Refill alerts</li>
+                <li><i class="fas fa-check"></i> Dosage tracking</li>
+            </ul>
+        </article>
+
+        <article class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-user-nurse"></i>
+            </div>
+            <h3>Home Healthcare</h3>
+            <p>Professional nursing care, physiotherapy, and medical equipment rental services available at your doorstep when you need them most.</p>
+            <ul class="service-features">
+                <li><i class="fas fa-check"></i> Trained professionals</li>
+                <li><i class="fas fa-check"></i> Equipment rental</li>
+                <li><i class="fas fa-check"></i> Flexible scheduling</li>
+            </ul>
+        </article>
+
+    </section>
+
+    <!-- CTA Section -->
+    <section class="services-cta">
+        <div class="cta-content">
+            <h2>Ready to Experience Better Healthcare?</h2>
+            <p>Join thousands of satisfied customers who trust PillStack+ for their healthcare needs.</p>
+            <div class="cta-buttons">
+                <a href="login.html" class="btn">Get Started Today</a>
+                <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>PillStack<span class="plus">+</span></h4>
+            <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html">Services</a>
+            <a href="prescription.html">Upload Prescription</a>
+            <a href="orders.html">My Orders</a>
+        </div>
+        <div class="footer-section">
+            <h4>Customer Care</h4>
+            <a href="contact.html">Contact Us</a>
+            <a href="about.html">About Us</a>
+            <a href="#">FAQs</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
+            <p><i class="fas fa-phone"></i> +91-9326433946</p>
+            <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
+            <p><i class="fas fa-clock"></i> 24/7 Support</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 PillStack+. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Supabase Init -->
+<script src="supabase-init.js"></script>
+
+<!-- Auth Check Script -->
+<script>
+    async function checkAuth() {
+        if (!window.supabaseClient) {
+            setTimeout(checkAuth, 300);
+            return;
+        }
+
+        try {
+            const { data: { session } } = await window.supabaseClient.auth.getSession();
+
+            if (session && session.user) {
+                const user = session.user;
+                document.getElementById('authSection').innerHTML = `
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-sun"></i>
+                    </button>
+
+                    <span class="user-email">${user.email}</span>
+                    <button class="btn-outline" onclick="window.supabaseClient.auth.signOut().then(() => location.reload())">
+                        Logout
+                    </button>
+                `;
+            }
+        } catch (error) {
+            console.log('No active session');
+        }
+    }
+
+    checkAuth();
+</script>
+
+<!-- Mobile Menu Script -->
+<script>
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (mobileMenuToggle && mobileMenu) {
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const icon = mobileMenuToggle.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Closez menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Closez menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
