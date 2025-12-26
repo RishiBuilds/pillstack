@@ -1,12 +1,20 @@
 (function () {
   const STORAGE_KEY = "theme";
-  const DEFAULT_THEME = "dark"; 
-
+  const DEFAULT_THEME = "dark";
   const root = document.documentElement;
 
-  function applyTheme(theme) {
+  function getPreferredTheme() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === "light" || saved === "dark") return saved;
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : DEFAULT_THEME;
+  }
+
+  function applyTheme(theme, persist = true) {
     root.setAttribute("data-theme", theme);
-    localStorage.setItem(STORAGE_KEY, theme);
+    if (persist) localStorage.setItem(STORAGE_KEY, theme);
     updateToggleIcon(theme);
   }
 
@@ -14,22 +22,21 @@
     const icon = document.querySelector(".theme-toggle i");
     if (!icon) return;
 
-    icon.className = theme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    icon.className = theme === "dark"
+      ? "fas fa-sun"
+      : "fas fa-moon";
   }
 
   function initTheme() {
-    const savedTheme = localStorage.getItem(STORAGE_KEY);
-    const theme = savedTheme || DEFAULT_THEME;
-
-    root.setAttribute("data-theme", theme);
-    updateToggleIcon(theme);
+    const theme = getPreferredTheme();
+    applyTheme(theme, false);
   }
 
   window.toggleTheme = function () {
-    const currentTheme = root.getAttribute("data-theme") || DEFAULT_THEME;
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    applyTheme(newTheme);
+    const current = root.getAttribute("data-theme") || DEFAULT_THEME;
+    const next = current === "dark" ? "light" : "dark";
+    applyTheme(next);
   };
 
-  initTheme();
+  document.addEventListener("DOMContentLoaded", initTheme);
 })();
