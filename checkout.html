@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js" defer></script>
+    <style>
+        .checkout-container {
+            padding: 8rem 5% 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
+        }
+        .checkout-form, .order-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+        .checkout-form h2, .order-summary h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+        }
+        @media (max-width: 768px) {
+            .checkout-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.png" alt="PillStack Logo">
+            <span>PillStack<span class="plus">+</span></span>
+        </a>
+        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" style="margin-left: auto; margin-right: 2rem;">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="medicine.html">Medicines</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="services.html">Services</a>
+    </nav>
+
+    <main class="checkout-container">
+        <div class="checkout-form">
+            <h2>Shipping Details</h2>
+            <form id="checkoutForm">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="fullName" required>
+                </div>
+                <div class="input-group">
+                    <label>Delivery Address</label>
+                    <textarea id="address" required style="width:100%; height:100px; padding:10px; border-radius:8px; border:1px solid #e2e8f0;"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <button type="submit" class="btn-primary w-100" style="margin-top:1rem">Place Order</button>
+            </form>
+        </div>
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div id="summaryItems"></div>
+            <div class="total-row">
+                <span>Total</span>
+                <span id="summaryTotal">₹0.00</span>
+            </div>
+        </div>
+    </main>
+
+    <script src="supabase-init.js"></script>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('pillstack_cart') || '[]');
+        const summaryItems = document.getElementById('summaryItems');
+        const summaryTotal = document.getElementById('summaryTotal');
+
+        if (cart.length === 0) {
+            alert('Your cart is empty');
+            window.location.href = 'medicine.html';
+        }
+
+        function displaySummary() {
+            summaryItems.innerHTML = cart.map(item => `
+                <div class="summary-item">
+                    <span>${item.name} x ${item.quantity}</span>
+                    <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            summaryTotal.innerText = `$${total.toFixed(2)}`;
+        }
+
+        document.getElementById('checkoutForm').onsubmit = async (e) => {
+            e.preventDefault();
+            if (!window.supabaseClient) {
+                alert('Authentication system is loading. Please wait.');
+                return;
+            }
+
+            const { data: { user } } = await window.supabaseClient.auth.getUser();
+            if (!user) {
+                alert('Session expired. Please login again.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const address = document.getElementById('address').value;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // Create Order
+            const { data: order, error: orderError } = await window.supabaseClient
+                .from('orders')
+                .insert({
+                    user_id: user.id,
+                    total_amount: total,
+                    delivery_address: address,
+                    status: 'paid'
+                })
+                .select()
+                .single();
+
+            if (orderError) {
+                alert('Error creating order: ' + orderError.message);
+                return;
+            }
+
+            // Create Order Items
+            const itemsToInsert = cart.map(item => ({
+                order_id: order.id,
+                medicine_id: item.id,
+                quantity: item.quantity,
+                unit_price: item.price
+            }));
+
+            const { error: itemsError } = await window.supabaseClient
+                .from('order_items')
+                .insert(itemsToInsert);
+
+            if (itemsError) {
+                alert('Error saving order items: ' + itemsError.message);
+            } else {
+                localStorage.removeItem('pillstack_cart');
+                alert('Order placed successfully! Order ID: ' + order.id);
+                window.location.href = 'index.html';
+            }
+        };
+
+        displaySummary();
+    </script>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Close menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+        }
+    </script>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>PillStack<span class="plus">+</span></h4>
+            <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html">Services</a>
+            <a href="prescription.html">Upload Prescription</a>
+            <a href="orders.html">My Orders</a>
+        </div>
+        <div class="footer-section">
+            <h4>Customer Care</h4>
+            <a href="contact.html">Contact Us</a>
+            <a href="about.html">About Us</a>
+            <a href="#">FAQs</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
+            <p><i class="fas fa-phone"></i> +91-9326433946</p>
+            <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
+            <p><i class="fas fa-clock"></i> 24/7 Support</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 PillStack+. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
