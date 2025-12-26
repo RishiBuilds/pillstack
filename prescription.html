@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescriptions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="theme.js" defer></script>
+    <style>
+        .prescription-container {
+            padding: 8rem 5% 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .upload-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .upload-area {
+            border: 2px dashed #e2e8f0;
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .prescription-list h2 {
+            margin-bottom: 1.5rem;
+        }
+        .prescription-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-approved { background: #dcfce7; color: #166534; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.png" alt="PillStack Logo">
+            <span>PillStack<span class="plus">+</span></span>
+        </a>
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html">Services</a>
+            <a href="prescription.html" class="active">Prescriptions</a>
+        </nav>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="auth-buttons" id="authSection">
+            <button class="theme-toggle" onclick="toggleTheme()">
+               <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="medicine.html">Medicines</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="services.html">Services</a>
+        <a href="prescription.html" class="active">Prescriptions</a>
+    </nav>
+
+    <main class="prescription-container">
+        <div class="upload-card">
+            <h1>Upload Prescription</h1>
+            <p>Upload your doctor's prescription to order restricted medicines.</p>
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click or drag file to upload (PDF, JPG, PNG)</p>
+                <input type="file" id="fileInput" hidden accept=".pdf,.jpg,.jpeg,.png">
+            </div>
+            <div id="uploadStatus"></div>
+        </div>
+
+        <div class="prescription-list">
+            <h2>Your Prescriptions</h2>
+            <div id="prescriptionsGrid">
+                <p>Loading your prescriptions...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="supabase-init.js"></script>
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const prescriptionsGrid = document.getElementById('prescriptionsGrid');
+
+        async function checkAuth() {
+            if (!window.supabaseClient) {
+                setTimeout(checkAuth, 500);
+                return;
+            }
+            const { data: { user } } = await window.supabaseClient.auth.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            document.getElementById('authSection').innerHTML = `
+                <span class="user-email">${user.email}</span>
+                <button onclick="window.supabaseClient.auth.signOut().then(() => location.reload())" class="btn-outline">Logout</button>
+            `;
+            loadPrescriptions(user.id);
+        }
+
+        uploadArea.onclick = () => fileInput.click();
+
+        fileInput.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file || !window.supabaseClient) return;
+
+            const { data: { user } } = await window.supabaseClient.auth.getUser();
+            const fileName = `${user.id}/${Date.now()}_${file.name}`;
+            
+            uploadStatus.innerHTML = '<p>Uploading...</p>';
+
+            const { data, error } = await window.supabaseClient.storage
+                .from('prescriptions')
+                .upload(fileName, file);
+
+            if (error) {
+                uploadStatus.innerHTML = `<p style="color:red">Error: ${error.message}</p>`;
+                return;
+            }
+
+            const { data: publicUrl } = window.supabaseClient.storage
+                .from('prescriptions')
+                .getPublicUrl(fileName);
+
+            const { error: dbError } = await window.supabaseClient
+                .from('prescriptions')
+                .insert({
+                    user_id: user.id,
+                    file_url: publicUrl.publicUrl,
+                    status: 'pending'
+                });
+
+            if (dbError) {
+                uploadStatus.innerHTML = `<p style="color:red">Error saving to database: ${dbError.message}</p>`;
+            } else {
+                uploadStatus.innerHTML = '<p style="color:green">Upload successful!</p>';
+                loadPrescriptions(user.id);
+            }
+        };
+
+        async function loadPrescriptions(userId) {
+            if (!window.supabaseClient) return;
+
+            const { data, error } = await window.supabaseClient
+                .from('prescriptions')
+                .select('*')
+                .eq('user_id', userId)
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                prescriptionsGrid.innerHTML = '<p>Error loading prescriptions.</p>';
+                return;
+            }
+
+            if (data.length === 0) {
+                prescriptionsGrid.innerHTML = '<p>No prescriptions uploaded yet.</p>';
+                return;
+            }
+
+            prescriptionsGrid.innerHTML = data.map(p => `
+                <div class="prescription-item">
+                    <div>
+                        <strong>${p.file_url.split('/').pop().split('_').pop()}</strong>
+                        <p style="font-size: 0.75rem; color: #666">${new Date(p.created_at).toLocaleDateString()}</p>
+                    </div>
+                    <div class="status-badge status-${p.status}">${p.status.toUpperCase()}</div>
+                    <a href="${p.file_url}" target="_blank" class="btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.75rem">View</a>
+                </div>
+            `).join('');
+        }
+
+        checkAuth();
+    </script>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                const icon = mobileMenuToggle.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Closez menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                    mobileMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Closez menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    const icon = mobileMenuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+        }
+    </script>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>PillStack<span class="plus">+</span></h4>
+            <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html">Services</a>
+            <a href="prescription.html">Upload Prescription</a>
+            <a href="orders.html">My Orders</a>
+        </div>
+        <div class="footer-section">
+            <h4>Customer Care</h4>
+            <a href="contact.html">Contact Us</a>
+            <a href="about.html">About Us</a>
+            <a href="#">FAQs</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
+            <p><i class="fas fa-phone"></i> +91-9326433946</p>
+            <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
+            <p><i class="fas fa-clock"></i> 24/7 Support</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 PillStack+. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
