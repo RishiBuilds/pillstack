@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather:ital,wght@0,300..900;1,300..900&family=Roboto:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="doctor.css">
+    <script src="theme.js" defer></script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <a href="index.html" class="logo">
+        <img src="assets/images/logo.png" alt="PillStack Logo">
+        <span>PillStack<span class="plus">+</span></span>
+    </a>
+
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="medicine.html">Medicines</a>
+        <a href="doctor.html" class="active">Doctors</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="auth-buttons" id="authSection">
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-sun"></i>
+        </button>
+        <a href="login.html" class="btn-outline">Login</a>
+        <button class="btn-primary">Helpline</button>
+    </div>
+</header>
+
+<!-- Mobile Menu -->
+<nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="medicine.html">Medicines</a>
+    <a href="doctor.html" class="active">Doctors</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+</nav>
+
+<!-- Main Content -->
+<main class="doc-container">
+    <section class="doc-header">
+        <h1>Tele-Consultation</h1>
+        <p>Connect with expert doctors via secure video calls from anywhere.</p>
+    </section>
+
+    <!-- Specialities -->
+    <section class="specialities">
+        <h2>Our Specialities</h2>
+        <div class="spec-grid">
+            <article class="spec-card">
+                <img src="assets/images/d1.png" alt="Dermatology">
+                <h3>Dermatology</h3>
+                <p>Skin, hair, and nail experts.</p>
+                <button class="btn-primary" onclick="openBooking('Dermatology')">Book Now</button>
+            </article>
+
+            <article class="spec-card">
+                <img src="assets/images/d2.png" alt="General Physician">
+                <h3>General Physician</h3>
+                <p>Primary care and infections.</p>
+                <button class="btn-primary" onclick="openBooking('General Physician')">Book Now</button>
+            </article>
+
+            <article class="spec-card">
+                <img src="assets/images/d3.png" alt="Paediatrics">
+                <h3>Paediatrics</h3>
+                <p>Specialized care for children.</p>
+                <button class="btn-primary" onclick="openBooking('Paediatrics')">Book Now</button>
+            </article>
+
+            <article class="spec-card">
+                <img src="assets/images/d7.png" alt="Cardiology">
+                <h3>Cardiology</h3>
+                <p>Heart health specialists.</p>
+                <button class="btn-primary" onclick="openBooking('Cardiology')">Book Now</button>
+            </article>
+        </div>
+    </section>
+
+    <!-- Appointments -->
+    <section class="my-appointments">
+        <h2>Your Appointments</h2>
+        <div id="appointmentsGrid">
+            <p>Loading your appointments…</p>
+        </div>
+    </section>
+</main>
+
+<!-- Booking Modal -->
+<div class="modal" id="bookingModal" aria-hidden="true">
+    <div class="modal-content">
+        <button class="close" onclick="closeModal()" aria-label="Close">&times;</button>
+        <h2>Book Consultation</h2>
+        <p id="selectedSpec"></p>
+
+        <form id="bookingForm">
+            <div class="input-group">
+                <label for="appointmentTime">Preferred Date & Time</label>
+                <input type="datetime-local" id="appointmentTime" required>
+            </div>
+
+            <div class="input-group">
+                <label for="reason">Reason for Visit</label>
+                <textarea id="reason" placeholder="Briefly describe your symptoms…"></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary w-100">Confirm Booking</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>PillStack<span class="plus">+</span></h4>
+            <p>Modern healthcare solutions for everyone. Your trusted online pharmacy.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="medicine.html">Medicines</a>
+            <a href="doctor.html">Doctors</a>
+            <a href="services.html">Services</a>
+            <a href="prescription.html">Upload Prescription</a>
+            <a href="orders.html">My Orders</a>
+        </div>
+        <div class="footer-section">
+            <h4>Customer Care</h4>
+            <a href="contact.html">Contact Us</a>
+            <a href="about.html">About Us</a>
+            <a href="#">FAQs</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p><i class="fas fa-envelope"></i> support@pillstack.in</p>
+            <p><i class="fas fa-phone"></i> +91-9326433946</p>
+            <p><i class="fas fa-map-marker-alt"></i> Available Worldwide</p>
+            <p><i class="fas fa-clock"></i> 24/7 Support</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 PillStack+. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="supabase-init.js"></script>
+<script>
+const modal = document.getElementById("bookingModal");
+const grid = document.getElementById("appointmentsGrid");
+let currentSpec = "";
+
+// Auth check
+async function checkAuth() {
+    if (!window.supabaseClient) return setTimeout(checkAuth, 300);
+
+    try {
+        const { data: { session } } = await window.supabaseClient.auth.getSession();
+        if (session?.user) {
+            const { email } = session.user;
+            document.getElementById("authSection").innerHTML = `
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <span class="user-email">${email}</span>
+                <button class="btn-outline" onclick="logout()">Logout</button>
+            `;
+            loadAppointments(session.user.id);
+        }
+    } catch (err) {
+        console.log('No session');
+    }
+}
+
+async function logout() {
+    await window.supabaseClient.auth.signOut();
+    location.reload();
+}
+
+// Modal functions
+function openBooking(spec) {
+    currentSpec = spec;
+    document.getElementById("selectedSpec").textContent = `Speciality: ${spec}`;
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+}
+
+// Booking form
+document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const { data: { user } } = await window.supabaseClient.auth.getUser();
+    if (!user) {
+        alert("Please login to book an appointment.");
+        return location.href = "login.html";
+    }
+
+    const { error } = await window.supabaseClient.from("consultations").insert({
+        user_id: user.id,
+        doctor_name: `Dr. ${currentSpec} Specialist`,
+        specialization: currentSpec,
+        appointment_time: document.getElementById("appointmentTime").value,
+        status: "scheduled",
+        reason: document.getElementById("reason").value
+    });
+
+    if (error) {
+        alert("Booking failed: " + error.message);
+    } else {
+        alert("Appointment booked successfully!");
+        closeModal();
+        loadAppointments(user.id);
+    }
+});
+
+// Load appointments
+async function loadAppointments(userId) {
+    const { data, error } = await window.supabaseClient
+        .from("consultations")
+        .select("*")
+        .eq("user_id", userId)
+        .order("appointment_time", { ascending: true });
+
+    if (error || !data) return grid.innerHTML = "<p>Error loading appointments.</p>";
+    if (!data.length) return grid.innerHTML = "<p>No appointments scheduled.</p>";
+
+    grid.innerHTML = data.map(a => `
+        <div class="appointment-card">
+            <div class="appt-info">
+                <h3>${a.doctor_name}</h3>
+                <p class="spec">${a.specialization}</p>
+                <p class="time">
+                    <i class="far fa-calendar-alt"></i>
+                    ${new Date(a.appointment_time).toLocaleString()}
+                </p>
+            </div>
+            <div class="appt-status status-${a.status}">${a.status.toUpperCase()}</div>
+            ${a.meeting_link 
+                ? `<a href="${a.meeting_link}" class="btn-primary">Join Call</a>`
+                : `<p class="wait">Link available 10 min before</p>`}
+        </div>
+    `).join("");
+}
+
+// Mobile menu
+const toggle = document.getElementById('menuToggle');
+const menu = document.getElementById('mobileMenu');
+
+toggle?.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    const icon = toggle.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+});
+
+document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        menu.classList.remove('active');
+        toggle.querySelector('i').className = 'fas fa-bars';
+    }
+});
+
+menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        menu.classList.remove('active');
+        toggle.querySelector('i').className = 'fas fa-bars';
+    });
+});
+
+checkAuth();
+</script>
+
+</body>
