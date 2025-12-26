@@ -1,11 +1,11 @@
-# 💊 PillStack – E-Commerce Pharmacy Platform
+# PillStack – E-Commerce Pharmacy Platform
 
 **PillStack** is a modern, responsive **e-commerce pharmacy website** built with **HTML, CSS, and JavaScript**, powered by **Supabase** as the backend.  
 The platform focuses on making healthcare **accessible, reliable, and user-friendly** by allowing users to browse medicines and place orders securely online.
 
 ---
 
-## 🌐 Live Concept
+## Live Concept
 An end-to-end digital pharmacy platform combining **secure authentication** and **real-time backend services**.
 
 ---
@@ -61,44 +61,51 @@ git clone ```https://github.com/RishiBuilds/pillstack-pharmacy-platform.git ```
 
 cd pillstack-pharmacy-platform 
 
-2️. Configure Supabase
-
-Create a project on Supabase
+### 2. Configure Supabase
+Create a project on [Supabase](https://supabase.com)
 
 Get:
+- Project URL
+- Anon Public Key
 
-Project URL
+Create a `.env` file (or use environment variables):
 
-Anon Public Key
+- SUPABASE_URL=your_supabase_project_url
+- SUPABASE_ANON_KEY=your_anon_key
 
-Create a .env file (or use environment variables):
-
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_ANON_KEY=your_anon_key
-
-3. Initialize Supabase (JS)
+### 3. Initialize Supabase (JS)
 const supabase = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY
-);
+
+---
 
 ## How to Run
 1. Clone the repository  
    ```bash
-   git clone https://github.com/RishiBuilds/pillstack-pharmacy-platform.git
+   git clone `https://github.com/RishiBuilds/pillstack-pharmacy-platform.git`
 
-2. Open `index.html` directly in your browser
-(or use Live Server for best experience)
+2. Open `index.html` directly in your browser (or use Live Server for best experience)
 
-📄 License
-This project is licensed under the MIT License – see the LICENSE file for details.
+---
+
+## License
+
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
 This means you're free to use, modify, and distribute this project, as long as you include the original license.
 
+---
+
 ## Author
+
 <div align="center">
+
 **Made with ❤️ by [Rishi](https://github.com/RishiBuilds)** for accessible healthcare.
-  <br>
-  If you found this project helpful, please consider giving it a ⭐ on GitHub!
+
+If you found this project helpful, please consider giving it a ⭐ on GitHub!
+
 </div>
+
+---
 Feel free to fork the repo, open issues, or submit pull requests!
