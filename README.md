@@ -57,7 +57,7 @@ An end-to-end digital pharmacy platform combining **secure authentication** and 
 
 1. Clone the Repository
 
-```bash git clone https://github.com/RishiBuilds/pillstack-pharmacy-platform.git ```
+``` git clone https://github.com/RishiBuilds/pillstack-pharmacy-platform.git ```
 
 cd pillstack-pharmacy-platform 
 
