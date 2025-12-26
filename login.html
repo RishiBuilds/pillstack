@@ -5,65 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
 
-    <!-- Google Font -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
     <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-    <!-- CSS -->
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="login.css" />
 
-    <!-- scripts-->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="theme.js" defer></script>
+    <script src="supabase-init.js" defer></script>
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header class="header">
+<!-- HEADER -->
+<header class="header">
+    <a href="index.html" class="logo">
+        <img src="assets/images/logo.png" alt="PillStack Logo" />
+    </a>
 
-        <!-- Logo -->
-        <a href="index.html" class="logo">
-            <img src="assets/images/logo.png" alt="PillStack Logo" />
-        </a>
-
-        <!-- Navigation -->
-        <nav class="navbar">
-            <a href="index.html">Home</a>
-            <a href="medicine.html">Medicines</a>
-            <a href="doctor.html">Doctors</a>
-            <a href="services.html">Services</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-        </nav>
-
-        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-            <i class="fas fa-bars"></i>
-        </button>
-
-        <!-- Auth Buttons -->
-        <div class="auth-buttons">
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-               <i class="fas fa-sun"></i>
-            </button>
-            <a href="tel:+91-9326433946" class="btn-primary" aria-label="Call helpline">Helpline</a>
-        </div>
-
-    </header>
-    <!-- Header End -->
-
-    <!-- Mobile Menu -->
-    <nav class="mobile-menu" id="mobileMenu">
+    <nav class="navbar">
         <a href="index.html">Home</a>
         <a href="medicine.html">Medicines</a>
         <a href="doctor.html">Doctors</a>
@@ -72,217 +40,222 @@
         <a href="contact.html">Contact</a>
     </nav>
 
-    <!-- Login Wrapper -->
-    <div class="login-wrapper">
-        <!-- Login/Signup Container -->
-        <div class="container" id="container">
-        
-        <!-- Sign Up Form -->
-        <div class="form-container sign-up-container">
-            <form id="signupForm" action="#">
-                <h1>CREATE ACCOUNT</h1>
-                <div class="social-container">
-                    <a href="#" class="social" aria-label="Sign up with Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                    <a href="#" class="social" aria-label="Sign up with Google"><i class="fab fa-google" aria-hidden="true"></i></a>
-                    <a href="#" class="social" aria-label="Sign up with LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                </div>
-                <span>or use your email for registration</span>
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
+        <i class="fas fa-bars"></i>
+    </button>
 
-                <!-- Input Fields -->
-                <div class="input-field">
-                    <i class="fas fa-envelope" aria-hidden="true"></i>
-                    <label for="signup-email" class="sr-only">Email</label>
-                    <input type="email" id="signup-email" name="email" placeholder="Email" required />
-                </div>
+    <div class="auth-buttons">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+            <i class="fas fa-sun"></i>
+        </button>
+        <a href="tel:+919326433946" class="btn-primary">Helpline</a>
+    </div>
+</header>
 
-                <div class="input-field password-field">
-                    <i class="fas fa-lock" aria-hidden="true"></i>
-                    <label for="signup-password" class="sr-only">Password</label>
-                    <input type="password" id="signup-password" name="password" placeholder="Password" required />
-                    <i class="fas fa-eye toggle-password" aria-hidden="true" onclick="togglePasswordVisibility('signup-password', this)"></i>
-                </div>
+<!-- MOBILE MENU -->
+<nav class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="medicine.html">Medicines</a>
+    <a href="doctor.html">Doctors</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+</nav>
 
-                <div id="signupError" style="color: red; margin: 10px 0; font-size: 0.9rem;"></div>
-                <button type="submit">SIGN UP</button>
-            </form>
-        </div>
+<section class="login-wrapper">
 
-        <!-- Sign In Form -->
-        <div class="form-container sign-in-container">
-            <form id="loginForm" action="#">
-                <h1>SIGN IN</h1>
-                <div class="social-container">
-                    <a href="#" class="social" aria-label="Sign in with Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                    <a href="#" class="social" aria-label="Sign in with Google"><i class="fab fa-google" aria-hidden="true"></i></a>
-                    <a href="#" class="social" aria-label="Sign in with LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                </div>
-                <span>or use your account</span>
+<div class="container" id="container">
 
-                <!-- Input Field -->
-                <div class="input-field">
-                    <i class="fas fa-envelope" aria-hidden="true"></i>
-                    <label for="signin-email" class="sr-only">Email</label>
-                    <input type="email" id="signin-email" name="email" placeholder="Email" required />
-                </div>
+    <!-- Mobile Toggle -->
+    <div class="mobile-form-toggle">
+        <button id="mobileSignInBtn" class="active">SIGN IN</button>
+        <button id="mobileSignUpBtn">SIGN UP</button>
+    </div>
 
-                <div class="input-field password-field">
-                    <i class="fas fa-lock" aria-hidden="true"></i>
-                    <label for="signin-password" class="sr-only">Password</label>
-                    <input type="password" id="signin-password" name="password" placeholder="Password" required />
-                    <i class="fas fa-eye toggle-password" aria-hidden="true" onclick="togglePasswordVisibility('signin-password', this)"></i>
-                </div>
-                
-                <div id="loginError" style="color: red; margin: 10px 0; font-size: 0.9rem;"></div>
-                <a href="#">Forgot your password?</a>
-                <button type="submit">SIGN IN</button>
-            </form>
-        </div>
+    <!-- SIGN UP -->
+    <div class="form-container sign-up-container">
+        <form id="signupForm">
+            <h1>Create Account</h1>
 
-        <!-- Overlay Container -->
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>WELCOME BACK!</h1>
-                    <p>To keep connected with us please login with your personal info</p>
-                    <button class="ghost" id="signIn">SIGN IN</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>HELLO, FRIEND!</h1>
-                    <p>Enter your personal details and start your journey with us</p>
-                    <button class="ghost" id="signUp">SIGN UP</button>
-                </div>
+            <span>Use your email to register</span>
+
+            <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="signup-email" placeholder="Email" required />
+            </div>
+
+            <div class="input-field password-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="signup-password" placeholder="Password" required />
+                <i class="fas fa-eye toggle-password" data-target="signup-password"></i>
+            </div>
+
+            <div id="signupError" class="form-error"></div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <!-- SIGN IN -->
+    <div class="form-container sign-in-container">
+        <form id="loginForm">
+            <h1>Sign In</h1>
+
+            <span>Use your account</span>
+
+            <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="signin-email" placeholder="Email" required />
+            </div>
+
+            <div class="input-field password-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="signin-password" placeholder="Password" required />
+                <i class="fas fa-eye toggle-password" data-target="signin-password"></i>
+            </div>
+
+            <div id="loginError" class="form-error"></div>
+
+            <a href="#">Forgot password?</a>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back</h1>
+                <p>Login to continue your journey</p>
+                <button class="ghost" id="signIn">Sign In</button>
+            </div>
+
+            <div class="overlay-panel overlay-right">
+                <h1>Hello Friend</h1>
+                <p>Create your account with us</p>
+                <button class="ghost" id="signUp">Sign Up</button>
             </div>
         </div>
-        <!-- Container End -->
     </div>
-    <!-- Login Wrapper End -->
 
-    <!-- JS -->
-    <script>
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
+</div>
+</section>
 
-        signUpButton.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
+<!-- SCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const container = document.getElementById('container');
+    const signUpBtn = document.getElementById('signUp');
+    const signInBtn = document.getElementById('signIn');
+
+    signUpBtn?.addEventListener('click', () => container.classList.add('right-panel-active'));
+    signInBtn?.addEventListener('click', () => container.classList.remove('right-panel-active'));
+
+    /* Password Toggle */
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+        icon.addEventListener('click', () => {
+            const input = document.getElementById(icon.dataset.target);
+            if (!input) return;
+            input.type = input.type === 'password' ? 'text' : 'password';
+            icon.classList.toggle('fa-eye-slash');
         });
+    });
 
-        signInButton.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
-        });
+    /* Supabase Auth */
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const loginError = document.getElementById('loginError');
+    const signupError = document.getElementById('signupError');
 
-        // Password visibility toggle icon
-        function togglePasswordVisibility(inputId, icon) {
-            const input = document.getElementById(inputId);
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
+    loginForm?.addEventListener('submit', async e => {
+        e.preventDefault();
+        const email = document.getElementById('signin-email').value;
+        const password = document.getElementById('signin-password').value;
+        loginError.textContent = '';
+
+        if (!window.supabaseClient) {
+            loginError.textContent = 'Authentication system is loading. Please wait.';
+            return;
         }
-    </script>
-<script src="supabase-init.js"></script>
-    <script>
-        // Wait's for DOM and Supabase to be ready
-        document.addEventListener('DOMContentLoaded', () => {
-            const loginForm = document.getElementById('loginForm');
-            const signupForm = document.getElementById('signupForm');
 
-            // Login Logic
-            if (loginForm) {
-                loginForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const email = document.getElementById('signin-email').value;
-                    const password = document.getElementById('signin-password').value;
-                    const errorEl = document.getElementById('loginError');
-                    
-                    if (errorEl) errorEl.innerText = '';
-                    
-                    if (!window.supabaseClient) {
-                        if (errorEl) errorEl.innerText = 'Authentication system is still loading. Please wait a moment.';
-                        return;
-                    }
+        const { error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) loginError.textContent = error.message;
+        else window.location.href = 'index.html';
+    });
 
-                    const { error } = await window.supabaseClient.auth.signInWithPassword({ email, password });
-                    
-                    if (error) {
-                        if (errorEl) errorEl.innerText = error.message;
-                    } else {
-                        window.location.href = 'index.html';
-                    }
-                });
-            }
+    signupForm?.addEventListener('submit', async e => {
+        e.preventDefault();
+        signupError.textContent = '';
 
-            // Signup Logic
-            if (signupForm) {
-                signupForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const email = document.getElementById('signup-email').value;
-                    const password = document.getElementById('signup-password').value;
-                    const errorEl = document.getElementById('signupError');
-                    
-                    if (errorEl) errorEl.innerText = '';
-                    
-                    if (!window.supabaseClient) {
-                        if (errorEl) errorEl.innerText = 'Authentication system is still loading. Please wait a moment.';
-                        return;
-                    }
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
 
-                    const { error } = await window.supabaseClient.auth.signUp({ email, password });
-                    
-                    if (error) {
-                        if (errorEl) errorEl.innerText = error.message;
-                    } else {
-                        alert('Success! Please check your email for verification.');
-                    }
-                });
-            }
-        });
-    </script>
+        if (!window.supabaseClient) {
+            signupError.textContent = 'Authentication system is loading. Please wait.';
+            return;
+        }
 
-    <!-- Mobile Menu Script -->
-    <script>
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
+        const { error } = await window.supabaseClient.auth.signUp({ email, password });
         
-        if (mobileMenuToggle && mobileMenu) {
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('active');
-                const icon = mobileMenuToggle.querySelector('i');
-                if (mobileMenu.classList.contains('active')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-            
-            // Closez the menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                    mobileMenu.classList.remove('active');
-                    const icon = mobileMenuToggle.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
-            
-            // Closez the menu when clicking a link
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('active');
-                    const icon = mobileMenuToggle.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                });
-            });
+        if (error) {
+            signupError.textContent = error.message;
+        } else {
+            signupForm.reset();
+            alert('Account created successfully! Please check your email to verify your account, then sign in.');
+            container.classList.remove('right-panel-active');
         }
-    </script>
+    });
+
+});
+</script>
+
+<!-- MOBILE MENU -->
+<script>
+const menuBtn = document.getElementById('mobileMenuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+
+menuBtn?.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    menuBtn.querySelector('i').classList.toggle('fa-times');
+});
+
+// Mobile form toggle
+const mobileSignInBtn = document.getElementById('mobileSignInBtn');
+const mobileSignUpBtn = document.getElementById('mobileSignUpBtn');
+const signInContainer = document.querySelector('.sign-in-container');
+const signUpContainer = document.querySelector('.sign-up-container');
+const mobileToggle = document.querySelector('.mobile-form-toggle');
+
+function updateMobileView() {
+    if (window.innerWidth <= 968) {
+        mobileToggle.style.display = 'flex';
+        signInContainer.style.display = 'block';
+        signUpContainer.style.display = 'none';
+    } else {
+        mobileToggle.style.display = 'none';
+        signInContainer.style.display = '';
+        signUpContainer.style.display = '';
+    }
+}
+
+mobileSignInBtn?.addEventListener('click', () => {
+    signInContainer.style.display = 'block';
+    signUpContainer.style.display = 'none';
+    mobileSignInBtn.classList.add('active');
+    mobileSignUpBtn.classList.remove('active');
+});
+
+mobileSignUpBtn?.addEventListener('click', () => {
+    signInContainer.style.display = 'none';
+    signUpContainer.style.display = 'block';
+    mobileSignUpBtn.classList.add('active');
+    mobileSignInBtn.classList.remove('active');
+});
+
+updateMobileView();
+window.addEventListener('resize', updateMobileView);
+</script>
 
 </body>
 </html>
