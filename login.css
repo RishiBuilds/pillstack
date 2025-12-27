@@ -291,6 +291,11 @@ button.ghost:hover {
     overflow: hidden;
     transition: transform 0.6s ease-in-out;
     z-index: 100;
+    pointer-events: none;
+}
+
+.overlay-container button {
+    pointer-events: auto;
 }
 
 .container.right-panel-active .overlay-container {
@@ -451,6 +456,11 @@ button.ghost:hover {
 
     .overlay-container {
         display: none;
+        pointer-events: none;
+    }
+    
+    .form-container {
+        z-index: 10;
     }
 }
 

@@ -239,7 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mobileSignInBtn) {
-        mobileSignInBtn.addEventListener('click', () => {
+        mobileSignInBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (signInContainer) signInContainer.style.display = 'block';
             if (signUpContainer) signUpContainer.style.display = 'none';
             mobileSignInBtn.classList.add('active');
@@ -248,7 +250,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mobileSignUpBtn) {
-        mobileSignUpBtn.addEventListener('click', () => {
+        mobileSignUpBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (signInContainer) signInContainer.style.display = 'none';
             if (signUpContainer) signUpContainer.style.display = 'block';
             mobileSignUpBtn.classList.add('active');
