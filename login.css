@@ -430,20 +430,32 @@ button.ghost:hover {
     }
 
     .form-container {
-        position: relative;
+        position: static;
         width: 100%;
         height: auto;
         min-height: auto;
         transition: none;
+        transform: none !important;
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .sign-in-container,
     .sign-up-container {
-        position: relative;
+        position: static;
+        left: auto;
         transform: none !important;
-        opacity: 1 !important;
         animation: none;
-        pointer-events: auto !important;
+        z-index: auto;
+    }
+    
+    /* Default: Show sign-in, hide sign-up */
+    .sign-in-container {
+        display: block;
+    }
+    
+    .sign-up-container {
+        display: none;
     }
 
     form {
@@ -459,10 +471,6 @@ button.ghost:hover {
         visibility: hidden;
         pointer-events: none;
         opacity: 0;
-    }
-    
-    .form-container {
-        z-index: 10;
     }
 }
 
