@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-/* Root Variables */
+/* Root Var's*/
 :root {
     --primary-color: #6366f1;
     --primary-dark: #4f46e5;
@@ -522,7 +522,6 @@ button.ghost:hover {
     }
 }
 
-/* LoadsState */
 button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -533,7 +532,6 @@ button:disabled:hover {
     box-shadow: none;
 }
 
-/* Smooth transitions */
 .login-wrapper,
 .container,
 form,
