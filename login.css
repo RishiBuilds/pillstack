@@ -281,6 +281,16 @@ button.ghost:hover {
     transform: scale(1.05);
 }
 
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 /* Overlay Container */
 .overlay-container {
     position: absolute;
@@ -407,7 +417,16 @@ button.ghost:hover {
     color: var(--white);
 }
 
-/* responsiveness */
+/* Transitions */
+.login-wrapper,
+.container,
+form,
+.input-field input,
+button {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Mobile responsiveness - Stack forms vertically */
 @media screen and (max-width: 968px) {
     .login-wrapper {
         padding: 20px 15px;
@@ -424,9 +443,9 @@ button.ghost:hover {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
+    /* Hide mobile form toggle buttons */
     .mobile-form-toggle {
-        display: flex;
-        background-color: var(--bg-light);
+        display: none !important;
     }
 
     .form-container {
@@ -436,8 +455,9 @@ button.ghost:hover {
         min-height: auto;
         transition: none;
         transform: none !important;
-        opacity: 1;
-        pointer-events: auto;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        display: block !important;
     }
 
     .sign-in-container,
@@ -449,13 +469,16 @@ button.ghost:hover {
         z-index: auto;
     }
     
-    /* Default: Show sign-in, hide sign-up */
+    /* Show both forms stacked vertically */
     .sign-in-container {
-        display: block;
+        display: block !important;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
     }
     
     .sign-up-container {
-        display: none;
+        display: block !important;
     }
 
     form {
@@ -524,38 +547,14 @@ button.ghost:hover {
         border-radius: 10px;
     }
 
-    .mobile-form-toggle {
-        padding: 20px 16px;
-        gap: 10px;
-        border-radius: 16px 16px 0 0;
-    }
-
-    .mobile-form-toggle button { 
-        padding: 12px 20px;
-        font-size: 13px;
-        border-radius: 8px;
+    /* Add more visual separation between forms on smaller screens */
+    .sign-in-container {
+        padding-bottom: 30px !important;
+        margin-bottom: 30px !important;
     }
 
     form a {
         font-size: 13px;
         margin: 16px 0 8px 0;
     }
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-button:disabled:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.login-wrapper,
-.container,
-form,
-.input-field input,
-button {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
