@@ -1472,8 +1472,18 @@ main {
 }
 
 @media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+    
+    body {
+        padding-top: 70px;
+    }
+    
     .header {
         padding: var(--space-md) 4%;
+        position: fixed;
+        width: 100%;
     }
     
     .navbar {
@@ -1510,10 +1520,12 @@ main {
     
     .hero-cta {
         flex-direction: column;
+        gap: var(--space-md);
     }
     
     .hero-cta .btn {
         width: 100%;
+        max-width: 100%;
     }
     
     .btn,
@@ -1527,6 +1539,11 @@ main {
         gap: var(--space-sm);
     }
     
+    .auth-buttons .btn-primary {
+        padding: 0.625rem 1rem;
+        font-size: var(--text-xs);
+    }
+    
     .theme-toggle {
         width: 38px;
         height: 38px;
@@ -1536,8 +1553,7 @@ main {
     }
     
     .user-email {
-        font-size: var(--text-xs);
-        padding: var(--space-xs) var(--space-sm);
+        display: none;
     }
     
     .trust-section,
@@ -1552,6 +1568,7 @@ main {
     
     .trust-badges {
         gap: var(--space-lg);
+        flex-wrap: wrap;
     }
     
     .trust-badge {
@@ -1568,6 +1585,10 @@ main {
         gap: var(--space-lg);
     }
     
+    .feature-card {
+        padding: var(--space-xl);
+    }
+    
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--space-lg);
@@ -1577,8 +1598,13 @@ main {
         font-size: var(--text-3xl);
     }
     
+    .home-cta p {
+        font-size: var(--text-base);
+    }
+    
     .home-cta .cta-buttons {
         flex-direction: column;
+        gap: var(--space-md);
     }
     
     .home-cta .btn {
@@ -1587,6 +1613,11 @@ main {
     
     .newsletter-form {
         flex-direction: column;
+        gap: var(--space-md);
+    }
+    
+    .newsletter-form input {
+        width: 100%;
     }
     
     .newsletter-form button {
@@ -1597,14 +1628,70 @@ main {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
     }
+    
+    .social-links {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .header {
+        padding: var(--space-sm) 3%;
+    }
+    
+    .logo img {
+        height: 32px;
+    }
+    
+    .logo span {
+        font-size: 18px;
+    }
+    
+    .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 20px;
+    }
+    
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        font-size: var(--text-sm);
+    }
+    
+    .auth-buttons .btn-primary {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.75rem;
+    }
+    
+    .hero {
+        padding: 2rem 3% 1.5rem;
+    }
+    
     .hero-left h1 {
         font-size: 2rem;
+        line-height: 1.1;
     }
     
     .hero-left p {
+        font-size: var(--text-sm);
+        margin-bottom: var(--space-xl);
+    }
+    
+    .hero-cta {
+        gap: var(--space-sm);
+    }
+    
+    .hero-cta .btn {
+        padding: 0.75rem 1.25rem;
         font-size: var(--text-sm);
     }
     
@@ -1618,14 +1705,101 @@ main {
     
     .trust-badges {
         flex-direction: column;
+        gap: var(--space-md);
     }
     
     .trust-badge {
         min-width: 100%;
+        padding: var(--space-md);
+    }
+    
+    .trust-badge i {
+        font-size: 28px;
+    }
+    
+    .trust-badge h3 {
+        font-size: var(--text-base);
+    }
+    
+    .trust-badge p {
+        font-size: var(--text-xs);
     }
     
     .stats-container {
         grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+    
+    .features-section h2,
+    .how-it-works h2 {
+        font-size: var(--text-3xl);
+    }
+    
+    .feature-card,
+    .step {
+        padding: var(--space-lg);
+    }
+    
+    .feature-icon,
+    .step-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .feature-icon i,
+    .step-icon i {
+        font-size: 28px;
+    }
+    
+    .home-cta {
+        padding: var(--space-2xl) var(--space-lg);
+    }
+    
+    .home-cta h2 {
+        font-size: var(--text-2xl);
+    }
+    
+    .home-cta p {
+        font-size: var(--text-sm);
+    }
+    
+    .newsletter-content h2 {
+        font-size: var(--text-2xl);
+    }
+    
+    .newsletter-content p {
+        font-size: var(--text-sm);
+    }
+    
+    .footer {
+        padding: var(--space-xl) 3%;
+    }
+    
+    .footer-section h3,
+    .footer-section h4 {
+        font-size: var(--text-lg);
+    }
+    
+    .footer-section p,
+    .footer-section a {
+        font-size: var(--text-xs);
+    }
+    
+    .social-links a {
+        width: 36px;
+        height: 36px;
+        font-size: var(--text-sm);
+    }
+    
+    #toast-container {
+        bottom: 1rem;
+        right: 1rem;
+        left: 1rem;
+    }
+    
+    .toast {
+        min-width: auto;
+        width: 100%;
     }
 }
 
